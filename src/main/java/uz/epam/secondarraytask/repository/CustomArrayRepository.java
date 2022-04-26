@@ -2,11 +2,14 @@ package uz.epam.secondarraytask.repository;
 
 import uz.epam.secondarraytask.entity.CustomArray;
 import uz.epam.secondarraytask.exception.CustomArrayNotFoundException;
+import uz.epam.secondarraytask.service.Warehouse;
+import uz.epam.secondarraytask.service.impl.WarehouseImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CustomArrayRepository {
+    private final Warehouse warehouse = WarehouseImpl.getInstance();
     private List<CustomArray> customArrayList;
 
     public CustomArrayRepository() {
@@ -25,19 +28,14 @@ public class CustomArrayRepository {
         this.customArrayList = customArrayList;
     }
 
-    public boolean save(CustomArray customArray) {
-        return customArrayList.add(customArray);
+    public void save(CustomArray customArray) {
+        customArrayList.add(customArray);
+        warehouse.update(customArrayList);
     }
 
-    public boolean delete(CustomArray customArray) {
-        boolean isDeleted = false;
-        for (CustomArray element : customArrayList) {
-            if (element.equals(customArray)){
-                isDeleted = customArrayList.remove(customArray);
-                break;
-            }
-        }
-        return isDeleted;
+    public void delete(CustomArray customArray) {
+        customArrayList.remove(customArray);
+        warehouse.update(customArrayList);
     }
 
     public CustomArray findCustomArrayById(int id) {

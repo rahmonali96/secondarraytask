@@ -1,5 +1,9 @@
 package uz.epam.secondarraytask.service;
 
-public class Warehouse {
+import uz.epam.secondarraytask.entity.CustomArray;
 
+import java.util.List;
+
+public interface Warehouse {
+    void update(List<CustomArray> customArrayList);
 }
