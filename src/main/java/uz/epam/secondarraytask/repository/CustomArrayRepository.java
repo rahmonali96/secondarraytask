@@ -38,40 +38,4 @@ public class CustomArrayRepository {
         warehouse.update(customArrayList);
     }
 
-    public CustomArray findCustomArrayById(int id) {
-        Optional<CustomArray> optionalCustomArray = customArrayList.stream()
-                .filter(customArray -> customArray.getId() == id).findFirst();
-        if (optionalCustomArray.isPresent()){
-            return optionalCustomArray.get();
-        } else throw new CustomArrayNotFoundException("CustomArray not found");
-    }
-
-    public List<CustomArray> findCustomArraysThatSumOfElementsEqualsTo(int sum){
-        return customArrayList.stream()
-                .filter(customArray -> Arrays.stream(customArray.getInts()).sum() == sum)
-                .collect(Collectors.toList());
-    }
-    public List<CustomArray> findCustomArraysThatSumOfElementsGreaterThan(int sum){
-        return customArrayList.stream()
-                .filter(customArray -> Arrays.stream(customArray.getInts()).sum() >= sum)
-                .collect(Collectors.toList());
-    }
-    public List<CustomArray> findCustomArraysThatSumOfElementsLessThan(int sum){
-        return customArrayList.stream()
-                .filter(customArray -> Arrays.stream(customArray.getInts()).sum() <= sum)
-                .collect(Collectors.toList());
-    }
-
-    public void sortById() {
-        customArrayList = customArrayList.stream()
-                .sorted(Comparator.comparingInt(CustomArray::getId))
-                .collect(Collectors.toList());
-    }
-
-    public void sortByAmountOfElement() {
-        customArrayList = customArrayList.stream()
-                .sorted(Comparator.comparingInt(o -> o.getInts().length))
-                .collect(Collectors.toList());
-    }
-
 }
